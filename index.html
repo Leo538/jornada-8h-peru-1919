@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8 Horas de Trabajo</title>
+    <style>
+      :root {
+        --bg: #f7f1e3;
+        --paper: #fffaf1;
+        --ink: #1d1917;
+        --maroon: #9b1723;
+        --red-dark: #6c0f17;
+        --gold: #d9b25f;
+        --gold-soft: #f2d79d;
+        --stone: #4e4038;
+        --shadow: rgba(27, 16, 13, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background:
+          linear-gradient(180deg, rgba(155, 23, 35, 0.14), rgba(155, 23, 35, 0.02)),
+          var(--bg);
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        background: var(--paper);
+        box-shadow: none;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 40px;
+        background: rgba(17, 13, 12, 0.72);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .brand {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #f7e8ba;
+        font-weight: 700;
+      }
+
+      .nav {
+        display: flex;
+        gap: 18px;
+        font-size: 0.85rem;
+        color: #f5e7c0;
+      }
+
+      .nav a {
+        opacity: 0.9;
+      }
+
+      .hero {
+        background:
+          linear-gradient(120deg, rgba(16, 9, 8, 0.80), rgba(16, 9, 8, 0.42)),
+          url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+        padding: 90px 40px 72px;
+        color: #fffaf2;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.5rem, 4vw, 5rem);
+        line-height: 0.96;
+        letter-spacing: -0.06em;
+      }
+
+      .subtitle {
+        margin: 0 0 22px;
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        color: #f8e2a5;
+        font-style: italic;
+      }
+
+      .lead {
+        max-width: 650px;
+        margin: 0 0 28px;
+        font-size: 1.04rem;
+        line-height: 1.7;
+        color: #f7f1eb;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(242, 215, 157, 0.18);
+        color: #fffaf2;
+        border: 1px solid rgba(242, 215, 157, 0.5);
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .hero-card {
+        width: min(100%, 440px);
+        justify-self: center;
+        background: rgba(255, 250, 241, 0.12);
+        border: 1px solid rgba(255, 250, 241, 0.22);
+        backdrop-filter: blur(8px);
+        padding: 18px;
+        border-radius: 22px;
+        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+      }
+
+      .hero-card img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        border-radius: 18px;
+        border: 6px solid rgba(255, 250, 241, 0.7);
+      }
+
+      .hero-note {
+        margin-top: 12px;
+        font-size: 0.72rem;
+        color: #f2dfb5;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .stat-strip {
+        background: #201914;
+        color: #f8edd7;
+        padding: 22px 40px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .stat {
+        text-align: center;
+        padding: 18px 12px;
+        border: 1px solid rgba(242, 215, 157, 0.14);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: clamp(1.8rem, 2vw, 2.4rem);
+        color: var(--gold-soft);
+      }
+
+      .stat span {
+        font-size: 0.88rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #e5d3a1;
+      }
+
+      section {
+        padding: 70px 40px;
+      }
+
+      .section-head {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      .section-head h2 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        color: var(--maroon);
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--stone);
+        font-size: 1rem;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .step {
+        background: #fff9f0;
+        border-top: 8px solid var(--maroon);
+        box-shadow: 0 10px 25px rgba(40, 28, 23, 0.07);
+        border-radius: 18px;
+        padding: 26px 24px;
+      }
+
+      .step:nth-child(2) { border-top-color: var(--gold); }
+      .step:nth-child(3) { border-top-color: #261d18; }
+
+      .step-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--maroon);
+        margin-bottom: 10px;
+      }
+
+      .step h3 {
+        margin: 0 0 12px;
+        font-size: 1.4rem;
+        color: var(--ink);
+      }
+
+      .step p {
+        margin: 0;
+        line-height: 1.7;
+        color: #433a35;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .images-stack {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .image-card {
+        background: #fff;
+        padding: 12px;
+        border-radius: 18px;
+        box-shadow: 0 12px 26px var(--shadow);
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 290px;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      .image-card p {
+        margin: 10px 4px 2px;
+        font-size: 0.82rem;
+        color: var(--stone);
+        line-height: 1.5;
+      }
+
+      .story-copy {
+        display: grid;
+        gap: 18px;
+      }
+
+      .info-box {
+        background: #fffaf3;
+        border-left: 6px solid var(--maroon);
+        padding: 18px 20px;
+        border-radius: 0 14px 14px 0;
+      }
+
+      .info-box h3 {
+        margin: 0 0 8px;
+        color: var(--maroon);
+        font-size: 1.22rem;
+      }
+
+      .info-box p {
+        margin: 0;
+        line-height: 1.7;
+        color: #413932;
+      }
+
+      .timeline {
+        background: linear-gradient(180deg, #f3ebd8, #f7f1e3);
+      }
+
+      .timeline-list {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .timeline-item {
+        background: rgba(255, 255, 255, 0.72);
+        border-radius: 18px;
+        padding: 22px 18px;
+        border: 1px solid rgba(155, 23, 35, 0.12);
+        box-shadow: 0 10px 25px rgba(36, 28, 22, 0.06);
+      }
+
+      .timeline-item .date {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #f1d38e;
+        color: #3d2b1f;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .timeline-item h3 {
+        margin: 0 0 8px;
+        color: var(--ink);
+        font-size: 1.2rem;
+      }
+
+      .timeline-item p {
+        margin: 0;
+        line-height: 1.7;
+        color: #433d39;
+      }
+
+      .cta {
+        text-align: center;
+        background: #1d1715;
+        color: #fffaf2;
+        padding: 70px 40px;
+      }
+
+      .cta-box {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      .cta h2 {
+        margin: 0 0 14px;
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+
+      .cta p {
+        margin: 0 0 26px;
+        line-height: 1.8;
+        color: #efdcb1;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 16px 30px;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--maroon), #c12832);
+        color: white;
+        box-shadow: 0 18px 25px rgba(155, 23, 35, 0.25);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 250, 241, 0.4);
+        color: #fffaf2;
+      }
+
+      .source-box {
+        background: #efe4ca;
+        padding: 32px 40px 50px;
+      }
+
+      .source-box h3 {
+        margin: 0 0 16px;
+        color: #271d1b;
+        font-size: 1.7rem;
+      }
+
+      .source-box ul {
+        margin: 0;
+        padding-left: 20px;
+        display: grid;
+        gap: 10px;
+        line-height: 1.7;
+        color: #2d241f;
+      }
+
+      .source-box a {
+        color: #8e1b27;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 900px) {
+        .hero-inner,
+        .story-grid,
+        .steps,
+        .timeline-list {
+          grid-template-columns: 1fr;
+        }
+
+        .stat-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+          padding: 14px 18px;
+        }
+
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .hero,
+        section,
+        .source-box,
+        .stat-strip {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .hero {
+          padding-top: 54px;
+          padding-bottom: 42px;
+        }
+
+        .topbar {
+          position: static;
+        }
+
+        .brand {
+          font-size: 0.72rem;
+          letter-spacing: 2px;
+        }
+
+        .nav {
+          gap: 10px 16px;
+          font-size: 0.72rem;
+        }
+
+        .hero-card {
+          width: 100%;
+        }
+
+        .hero-card img {
+          height: 260px;
+        }
+
+        .images-stack {
+          grid-template-columns: 1fr;
+        }
+
+        .chip {
+          width: 100%;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .chips {
+          flex-direction: column;
+        }
+
+        h1 {
+          font-size: 2.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">Movimiento Obrero</div>
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="#historia">Historia</a>
+          <a href="#eventos">Eventos</a>
+          <a href="#impacto">Impacto</a>
+          <a href="#fuentes">Fuentes</a>
+        </nav>
+      </header>
+
+      <section class="hero" id="historia">
+        <div class="hero-inner">
+          <div>
+            <p class="eyebrow">Línea histórica · Perú 1919</p>
+            <h1>La conquista de las 8 horas de trabajo</h1>
+            <p class="subtitle">Paro general de Lima y Callao</p>
+            <p class="lead">
+              Panaderos, tejedores, tranviarios y otros gremios se unieron para exigir una jornada más humana.
+              Su protesta marcó un antes y un después en la historia del trabajo en Perú y en América Latina.
+            </p>
+            <div class="chips" aria-label="Fechas clave">
+              <span class="chip">14–15 enero · Paro de 48 horas</span>
+              <span class="chip">16 enero · Decreto publicado</span>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <img
+              src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/01/15/000556308W.webp"
+              alt="Portadas de diario histórico con información sobre la jornada de trabajo"
+            />
+            <div class="hero-note">Portadas de La Crónica · 1919</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="stat-strip">
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>8h</strong>
+            <span>jornada máxima</span>
+          </div>
+          <div class="stat">
+            <strong>48h</strong>
+            <span>paro general</span>
+          </div>
+          <div class="stat">
+            <strong>1919</strong>
+            <span>año clave</span>
+          </div>
+        </div>
+      </div>
+
+      <section id="eventos">
+        <div class="section-head">
+          <h2>¿Qué ocurrió? · ¿Qué reclamaron? · ¿Qué cambió?</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3>¿Qué ocurrió?</h3>
+            <p>
+              Los gremios de Lima y Callao declararon un paro general de 48 horas que interrumpió la ciudad.
+              El conflicto dejó cuatro muertos y más de cien heridos.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3>¿Qué reclamaron?</h3>
+            <p>
+              Exigieron reducir la jornada de 16 a 8 horas diarias y mejorar las condiciones salariales y de descanso.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3>¿Qué cambió?</h3>
+            <p>
+              El presidente José Pardo firmó el decreto que estableció la jornada de ocho horas para dependencias y talleres del Estado.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="impacto">
+        <div class="section-head">
+          <h2>Imágenes de la época</h2>
+          <p>Momentos históricos que recuerdan la lucha por un trabajo más justo.</p>
+        </div>
+
+        <div class="story-grid">
+          <div class="images-stack">
+            <div class="image-card">
+              <img
+                src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/01/15/000556309W.webp"
+                alt="Decreto de las ocho horas publicado en El Peruano"
+              />
+              <p>Decreto publicado en El Peruano el 16 de enero de 1919.</p>
+            </div>
+            <div class="image-card">
+              <img
+                src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/01/15/000556310W.webp"
+                alt="José Pardo, presidente del Perú"
+              />
+              <p>José Pardo, quien firmó el decreto que acortó la jornada laboral.</p>
+            </div>
+          </div>
+
+          <div class="story-copy">
+            <div class="info-box">
+              <h3>¿Quiénes estuvieron involucrados?</h3>
+              <p>
+                Panaderos, tejedores, tranviarios, choferes, carroceros y herreros, junto con estudiantes y organizaciones obreras.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>¿Qué problema laboral motivó la lucha?</h3>
+              <p>
+                Jornadas de hasta 16 horas, bajos salarios, ausencia de descansos adecuados y escasas garantías frente a accidentes y explotación.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>¿Por qué fue importante?</h3>
+              <p>
+                Fue una conquista del movimiento obrero peruano y un paso decisivo para la protección del tiempo de trabajo y descanso.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="timeline">
+        <div class="section-head">
+          <h2>Línea de tiempo</h2>
+        </div>
+
+        <div class="timeline-list">
+          <article class="timeline-item">
+            <div class="date">1919</div>
+            <h3>Paro general</h3>
+            <p>Trabajadores de Lima y Callao se movilizan para exigir una reducción de la jornada laboral.</p>
+          </article>
+
+          <article class="timeline-item">
+            <div class="date">14–15</div>
+            <h3>Acción directa</h3>
+            <p>El movimiento sindical y obrero pone en marcha una protesta de 48 horas con gran impacto social.</p>
+          </article>
+
+          <article class="timeline-item">
+            <div class="date">16 de enero</div>
+            <h3>Decreto</h3>
+            <p>Se publica la medida que establece la jornada de ocho horas en dependencias y talleres del Estado.</p>
+          </article>
+
+          <article class="timeline-item">
+            <div class="date">Luego</div>
+            <h3>Legado</h3>
+            <p>La reivindicación se consolida como símbolo histórico de la defensa de los derechos laborales.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="cta-box">
+          <h2>Un derecho que todavía resuena hoy</h2>
+          <p>
+            La lucha por las ocho horas no fue solo un hecho histórico: fue una defensa de la dignidad, el descanso y la vida personal.
+          </p>
+          <div class="chips" style="justify-content:center;">
+            <a class="btn btn-primary" href="https://www.tvperu.gob.pe/videos/sucedio-en-el-peru/la-lucha-por-la-jornada-laboral-de-las-ocho-horas" target="_blank" rel="noreferrer">▶ Ver video</a>
+            <a class="btn btn-secondary" href="#fuentes">Consultar fuentes</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="source-box" id="fuentes">
+        <h3>Fuentes de la información</h3>
+        <ul>
+          <li>Diario Oficial El Peruano, “El país que recibió las 8 horas”: <a href="https://www.elperuano.pe/noticia/74714-el-pais-que-recibio-las-8-horas" target="_blank" rel="noreferrer">El Peruano</a></li>
+          <li>Agencia ANDINA, “100 años de las 8 horas”: <a href="https://andina.pe/agencia/galeria-100-anos-las-8-horas-5366.aspx" target="_blank" rel="noreferrer">ANDINA</a></li>
+          <li>TVPerú, “La lucha por la jornada laboral de las ocho horas”: <a href="https://www.tvperu.gob.pe/videos/sucedio-en-el-peru/la-lucha-por-la-jornada-laboral-de-las-ocho-horas" target="_blank" rel="noreferrer">TVPerú</a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
